@@ -1,3 +1,3 @@
 git add *.cpp *.py *.h *.sh Data
 git commit -m "A new commit"
-git push -u origins master
+git push -u origin master
