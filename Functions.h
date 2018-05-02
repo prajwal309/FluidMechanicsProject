@@ -2,7 +2,7 @@
 #define FUNCTIONS_H_INCLUDED
 //grids in the simulation
 #define DIM 25
-
+#include <random>
 using namespace std;
 
 //Functions available
@@ -21,14 +21,17 @@ void DiskBC1(double ElectricField[DIM][DIM][DIM],double Laplacian[DIM][DIM][DIM]
 void DiskBC2(double ElectricField[DIM][DIM][DIM],double Laplacian[DIM][DIM][DIM]);
 
 
-
-void Reset2Constant(double MatrixField[DIM][DIM][DIM], double Value){
+void Reset2Constant(double MatrixField[DIM][DIM][DIM], double Value, double Variation){
   /*  This functions sets everyvalue in the matrix to a constant
+  The Value is the value set up, and variation is the variation set up
   */
+
+  std::default_random_engine generator;
+  std::normal_distribution<double> distribution(Value,Variation);
   for(int i=0;i<DIM;i++){
      for(int j=0;j<DIM;j++){
         for(int k=0;k<DIM;k++){
-            *(&MatrixField[i][j][k]) = Value;
+            *(&MatrixField[i][j][k]) = distribution(generator);
         }
      }
   }
@@ -47,6 +50,10 @@ void AddMatrix(double MatrixField1[DIM][DIM][DIM], double MatrixField2[DIM][DIM]
    }
 }
 
+
+void SaveFile(){
+  cout<<"Need to write this before the ";
+}
 
 void MultiplyMatrix(double MatrixField1[DIM][DIM][DIM], double MatrixField2[DIM][DIM][DIM], double Result[DIM][DIM][DIM]){
    /*This method will multiply two matrices element wise*/

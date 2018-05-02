@@ -36,13 +36,26 @@ int main(){
   //double KrMobility = 13.0/(PressureTorr);
 
   double Density = Pressure*NitroMu*2.*AMU/(Boltzmann*Temp);
-
-  //cout<<"Just checking the function::"<<VoltageChange(100,1e-4);
-  //cout<<" The calculated density comes to:: "<<Density<<endl;
+  double Variation = Density*0.01;
 
 
   //Fill the chamber with XenonMu
-  Reset2Constant(Xenon, 1.2);
+  Reset2Constant(Xenon, Density, Variation);
+  Reset2Constant(Electron, 0.0, 0.0);
+
+  //PrintMatrixLayer(Xenon, 10);
+  PrintMatrixLayer(Electron,10);
+
+
+  double TimeStart = 0.0;
+  double TimeStop = 10.0;
+  double TimeStep = 1e-3;
+
+  while(TimeStart<TimeStop){
+    cout<<TimeStart<<endl;
+    TimeStart+=TimeStep;
+  }
+
 
   //Calculate the breakdown voltage
 

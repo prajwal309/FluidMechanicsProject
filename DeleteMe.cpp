@@ -2,6 +2,8 @@
 #include <string>
 #include <random>
 
+using namespace std;
+
 int main()
 {
   const int nrolls=10000;  // number of experiments
@@ -23,5 +25,6 @@ int main()
     std::cout << i << "-" << (i+1) << ": ";
     std::cout << std::string(p[i]*nstars/nrolls,'*') << std::endl;
   }
+
   return 0;
 }
