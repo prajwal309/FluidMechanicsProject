@@ -51,9 +51,6 @@ void AddMatrix(double MatrixField1[DIM][DIM][DIM], double MatrixField2[DIM][DIM]
 }
 
 
-void SaveFile(){
-  cout<<"Need to write this before the ";
-}
 
 void MultiplyMatrix(double MatrixField1[DIM][DIM][DIM], double MatrixField2[DIM][DIM][DIM], double Result[DIM][DIM][DIM]){
    /*This method will multiply two matrices element wise*/
@@ -121,9 +118,16 @@ void SquareBC1(double ElectricField[DIM][DIM][DIM],double Result[DIM][DIM][DIM])
 }
 
 
-void DiskBC1(double ElectricField[DIM][DIM][DIM],double Laplacian[DIM][DIM][DIM]){
+void DiskBC1(double Matrix[DIM][DIM][DIM]){
   /*This is the implementation of the first boundary condition*/
-  cout<<"I will be implementing the first boundary condition";
+
+  //Make the first layer zero
+  for(int i=0;i<DIM;i++){
+      for(int j=0;j<DIM;j++){
+            *(&Matrix[i][j][0]) = 0.0;
+      }
+  }
+
 }
 
 void DiskBC2(double ElectricField[DIM][DIM][DIM],double Laplacian[DIM][DIM][DIM]){

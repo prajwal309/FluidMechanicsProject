@@ -1,5 +1,9 @@
+//importing the standard libraries
 #include<iostream>
 #include<cmath>
+#include <fstream>
+
+//importing the user defined functions
 #include "Functions.h"
 #include "Constant.h"
 
@@ -9,6 +13,48 @@
 
 
 using namespace std;
+
+void SaveDataCube(double DataCube[N][N][N], string FileName){
+  ofstream Save3Dfile;
+  Save3Dfile.open ("Data/"+FileName);
+
+  for(int i=0;i<DIM;i++){
+      for(int j=0;j<DIM;j++){
+          for(int k=0;k<DIM;k++){
+            cout<<i<<","<<j<<","<<k<<"::"<<DataCube[i][j][k]<<endl;
+
+            Save3Dfile<<DataCube[i][j][k];
+            if(k<DIM-1){
+              Save3Dfile<<",";
+            }
+            else{
+              Save3Dfile<<endl;
+            }
+          }
+          Save3Dfile<<endl;
+      }
+
+  }
+  Save3Dfile.close();
+  cout<<"saving to the file"<<FileName<<endl;
+}
+
+void SaveDataMatrix(double DataCube[N][N][N], string FileName){
+  /*This shows saves the data file*/
+
+  double Output[N][N];
+
+
+  ofstream myfile;
+  myfile.open ("Data/"+FileName);
+  myfile << "Writing this to a file.\n";
+  myfile << "Writing this to a file.\n";
+  myfile << "Writing this to a file.\n";
+  myfile << "Writing this to a file.\n";
+  myfile.close();
+  cout<<"saving to the file"<<FileName<<endl;
+}
+
 
 int main(){
 
@@ -20,6 +66,8 @@ int main(){
   double const CellVolume = ActualDIM*ActualDIM*ActualDIM; //Volume of a cell
   int HeightDIM = (int)(DiamFrac*DIM);
 
+  string SaveFileName;
+  cout<<SaveFileName;
 
   //Initiating data cubes
   double Xenon[N][N][N];
@@ -44,25 +92,53 @@ int main(){
   Reset2Constant(Electron, 0.0, 0.0);
 
   //PrintMatrixLayer(Xenon, 10);
-  PrintMatrixLayer(Electron,10);
+  //PrintMatrixLayer(Electron,10);
 
 
-  double TimeStart = 0.0;
-  double TimeStop = 10.0;
-  double TimeStep = 1e-3;
+  double TimeNow = 0.0;
+  double TimeStop = 1.0;
+  double TimeStep = 3e-2;
 
-  while(TimeStart<TimeStop){
-    cout<<TimeStart<<endl;
-    TimeStart+=TimeStep;
+  cout<<"The Time Start is "<<TimeNow<<endl;
+  cout<<"The Time Stop is "<<TimeStop<<endl;
+
+  //Use the relaxation method the find the electric field
+
+  //Calculate the breakdown voltage
+  //Try upto breakdown voltage
+  //Write a routine to calculate the electric field
+
+  int counter = 0;  //
+  double LastSaveTime = TimeNow;
+  double SaveInterval = TimeStep*10.;
+  while(TimeNow<TimeStop){
+    //cout<<TimeStart<<endl;
+    //Apply the Boundary conditions
+
+    //Do the calculation until the things work out...
+    TimeNow+=TimeStep;
+
+
+
+    if(SaveInterval<(TimeNow-LastSaveTime)){
+      string TempString = to_string(counter);
+      SaveFileName = "DataCube"+TempString+".txt";
+      SaveDataCube(Xenon, SaveFileName);
+      LastSaveTime = TimeNow;
+      counter++;
+    }
+    //cout<<"Find the paper::"<<SaveFileName;
+    //SaveFile(double Plasma, string FileName);
+
+    //Save Data cube
   }
 
 
-  //Calculate the breakdown voltage
-
-  //Write a routine to calculate the electric field
 
 
-  //Apply the Boundary conditions
+
+
+
 
 
   //Voltage application curve
